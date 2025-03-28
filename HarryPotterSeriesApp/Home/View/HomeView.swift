@@ -12,12 +12,12 @@ class HomeView: UIView {
     // MARK: - 뷰
     private let titleView = TitleView()
     private let seriesView = SeriesButtonView()
-    
+    private let bookDetailsView = BookDetailsView()
+
     // MARK: - 스택
     private lazy var mainStackView: UIStackView = {
-        let view = UIStackView(arrangedSubviews: [titleView, seriesView])
+        let view = UIStackView(arrangedSubviews: [titleView, seriesView, bookDetailsView])
         view.axis = .vertical
-        view.alignment = .center
         return view
     }()
     
@@ -38,12 +38,14 @@ class HomeView: UIView {
         addSubview(mainStackView)
         mainStackView.snp.makeConstraints {
             $0.top.equalTo(safeAreaLayoutGuide).offset(10)
-            $0.leading.trailing.equalToSuperview()
+            $0.leading.trailing.equalToSuperview().inset(20)
+
         }
     }
     
     func configure(with book: Book) {
         titleView.configure(with: book.title)
         seriesView.configure(with: "1") // [ 추후 변경 ]
+        bookDetailsView.configure(with: book.title, author: book.author, releaseDate: book.releaseDate, pages: book.pages)
     }
 }
