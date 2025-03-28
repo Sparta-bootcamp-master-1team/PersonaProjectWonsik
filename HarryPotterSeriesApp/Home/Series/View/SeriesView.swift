@@ -35,7 +35,7 @@ class SeriesButtonView: UIView {
     private func setupUI() {
         addSubview(button)
         button.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.centerX.equalToSuperview()
             $0.width.height.equalTo(30)
             $0.top.equalToSuperview().offset(16)
             $0.bottom.equalToSuperview()
