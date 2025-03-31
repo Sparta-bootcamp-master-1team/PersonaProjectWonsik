@@ -39,7 +39,7 @@ class TitleView: UIView {
         }
     }
     
-    func configure(with title: String) {
-        titleLabel.text = title
+    func configure(book: Book) {
+        titleLabel.text = book.title
     }
 }

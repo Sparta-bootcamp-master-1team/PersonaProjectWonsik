@@ -125,20 +125,22 @@ class BookInfoView: UIView {
         addSubview(infoStack)
         
         infoStack.snp.makeConstraints {
+            $0.top.equalToSuperview()
             $0.leading.trailing.equalToSuperview()
+            $0.bottom.equalToSuperview()
         }
     }
     
-    func configure(with title: String, author: String, releaseDate: String, pages: Int) {
-        titleLabel.text = title
-        authorLabel.text = author
+    func configure(book: Book) {
+        titleLabel.text = book.title
+        authorLabel.text = book.author
         
-        if let formattedDate = DateFormatterHelper.formatDateString(inputDate: releaseDate) {
+        if let formattedDate = DateFormatterHelper.formatDateString(inputDate: book.releaseDate) {
             releasedLabel.text = formattedDate
         } else {
-            releasedLabel.text = releaseDate
+            releasedLabel.text = book.releaseDate
         }
 
-        pagesLabel.text = "\(pages)"
+        pagesLabel.text = "\(book.pages)"
     }
 }

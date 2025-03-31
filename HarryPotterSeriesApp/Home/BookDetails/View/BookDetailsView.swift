@@ -11,15 +11,29 @@ import SnapKit
 class BookDetailsView: UIView {
     
     // MARK: - 뷰
+    /// 책 이미지 뷰
     private let bookImageView = BookImageView()
+    
+    /// 책 정보 뷰
     private let bookInfoView = BookInfoView()
     
+    private let dedicationView = DedicationView()
+    
+    private let summaryView = SummaryView()
     
     // MARK: - 스택
-    private lazy var detailsStack: UIStackView = {
+    
+    private lazy var infoStack: UIStackView = {
         let view = UIStackView(arrangedSubviews: [bookImageView, bookInfoView])
         view.axis = .horizontal
         view.spacing = 10
+        return view
+    }()
+    
+    private lazy var metadataStack: UIStackView = {
+        let view = UIStackView(arrangedSubviews: [dedicationView, summaryView])
+        view.axis = .vertical
+        view.spacing = 24
         return view
     }()
     
@@ -36,16 +50,29 @@ class BookDetailsView: UIView {
     
     // MARK: - UI 구성
     private func setUI() {
-        addSubview(detailsStack)
-        detailsStack.snp.makeConstraints {
+        addSubview(infoStack)
+        
+        infoStack.snp.makeConstraints {
             $0.top.equalToSuperview().offset(16)
-            $0.bottom.equalToSuperview()
-            $0.leading.trailing.equalTo(safeAreaLayoutGuide).offset(5)
+            $0.leading.equalTo(safeAreaLayoutGuide).offset(5)
+            $0.trailing.equalTo(safeAreaLayoutGuide).inset(5)
+
         }
+        
+        addSubview(metadataStack)
+        metadataStack.snp.makeConstraints {
+            $0.top.equalTo(infoStack.snp.bottom).offset(24)
+            $0.leading.equalToSuperview().offset(20)
+            $0.trailing.equalToSuperview().inset(20)
+
+        }
+        
     }
     
-    func configure(with title: String, author: String, releaseDate: String, pages: Int) {
-        bookImageView.configure(with: "1") // [ 추후 변경 예정 ]
-        bookInfoView.configure(with: title, author: author, releaseDate: releaseDate, pages: pages)
+    func configure(book: Book) {
+        bookImageView.configure(book: book)
+        bookInfoView.configure(book: book)
+        dedicationView.configure(book: book)
+        summaryView.configure(book: book)
     }
 }
