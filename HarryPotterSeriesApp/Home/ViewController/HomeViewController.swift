@@ -30,7 +30,7 @@ class HomeViewController: UIViewController {
                 // 임의로 첫번째 지정 [ 추후 수정 ]
                 if let firstBook = books.first {
                     DispatchQueue.main.async {
-                        self.homeView.configure(with: firstBook)
+                        self.homeView.configure(book: firstBook)
                     }
                 }
                 

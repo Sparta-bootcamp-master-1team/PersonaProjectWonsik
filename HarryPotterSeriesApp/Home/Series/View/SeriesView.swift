@@ -42,7 +42,7 @@ class SeriesButtonView: UIView {
         }
     }
     
-    func configure(with title: String) {
-        button.setTitle(title, for: .normal)
+    func configure(book: Book) {
+        button.setTitle("1", for: .normal)
     }
 }
