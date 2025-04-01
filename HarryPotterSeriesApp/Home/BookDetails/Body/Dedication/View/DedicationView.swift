@@ -13,7 +13,6 @@ class DedicationView: UIView {
     private lazy var dedicationStack: UIStackView = {
         let view = UIStackView(arrangedSubviews: [title, dedication])
         view.axis = .vertical
-        view.alignment = .leading
         view.spacing = 8
         return view
     }()
@@ -22,6 +21,7 @@ class DedicationView: UIView {
         let label = UILabel()
         label.text = "Dedication"
         label.font = .systemFont(ofSize: 18, weight: .bold)
+        label.textAlignment = .left
         label.textColor = .black
         return label
     }()
@@ -32,6 +32,7 @@ class DedicationView: UIView {
         label.textColor = .darkGray
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
+        label.textAlignment = .left
         return label
     }()
     

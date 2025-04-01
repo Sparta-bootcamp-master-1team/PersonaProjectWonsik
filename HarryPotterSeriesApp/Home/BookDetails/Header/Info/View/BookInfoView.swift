@@ -22,7 +22,6 @@ class BookInfoView: UIView {
     private lazy var authorStack: UIStackView = {
         let view = UIStackView(arrangedSubviews: [authorTitleLabel, authorLabel])
         view.axis = .horizontal
-        view.alignment = .leading
         view.spacing = 5
         return view
     }()
@@ -30,7 +29,6 @@ class BookInfoView: UIView {
     private lazy var releasedStack: UIStackView = {
         let view = UIStackView(arrangedSubviews: [releasedTitleLabel, releasedLabel])
         view.axis = .horizontal
-        view.alignment = .leading
         view.spacing = 5
         return view
     }()
@@ -38,7 +36,6 @@ class BookInfoView: UIView {
     private lazy var pagesStack: UIStackView = {
         let view = UIStackView(arrangedSubviews: [pagesTitleLabel, pagesLabel])
         view.axis = .horizontal
-        view.alignment = .leading
         view.spacing = 5
         return view
     }()
@@ -46,7 +43,7 @@ class BookInfoView: UIView {
     // MARK: - UI 요소
     private let titleLabel: UILabel = {
         var label = UILabel()
-        label.textAlignment = .center
+        label.textAlignment = .left
         label.font = .systemFont(ofSize: 20, weight: .bold)
         label.textColor = .black
         label.numberOfLines = 2
@@ -58,7 +55,7 @@ class BookInfoView: UIView {
     private let authorTitleLabel: UILabel = {
         var label = UILabel()
         label.text = "Author"
-        label.textAlignment = .center
+        label.textAlignment = .left
         label.font = .systemFont(ofSize: 16, weight: .bold)
         label.textColor = .black
         return label
@@ -66,7 +63,7 @@ class BookInfoView: UIView {
     
     private let authorLabel: UILabel = {
         var label = UILabel()
-        label.textAlignment = .center
+        label.textAlignment = .left
         label.font = .systemFont(ofSize: 18)
         label.textColor = .darkGray
         return label
@@ -75,7 +72,7 @@ class BookInfoView: UIView {
     private let releasedTitleLabel: UILabel = {
         var label = UILabel()
         label.text = "Released"
-        label.textAlignment = .center
+        label.textAlignment = .left
         label.font = .systemFont(ofSize: 16, weight: .bold)
         label.textColor = .black
         
@@ -84,7 +81,7 @@ class BookInfoView: UIView {
     
     private let releasedLabel: UILabel = {
         var label = UILabel()
-        label.textAlignment = .center
+        label.textAlignment = .left
         label.font = .systemFont(ofSize: 14)
         label.textColor = .gray
         
@@ -94,7 +91,7 @@ class BookInfoView: UIView {
     private let pagesTitleLabel: UILabel = {
         var label = UILabel()
         label.text = "Pages"
-        label.textAlignment = .center
+        label.textAlignment = .left
         label.font = .systemFont(ofSize: 14, weight: .bold)
         label.textColor = .black
         
@@ -103,7 +100,7 @@ class BookInfoView: UIView {
     
     private let pagesLabel: UILabel = {
         var label = UILabel()
-        label.textAlignment = .center
+        label.textAlignment = .left
         label.font = .systemFont(ofSize: 14)
         label.textColor = .gray
         
