@@ -14,8 +14,10 @@ class BookDetailsBodyView: UIView {
     
     private let summaryView = SummaryView()
     
+    private let chaptersView = ChaptersView()
+    
     private lazy var bookDetailsBodyStack: UIStackView = {
-        let view = UIStackView(arrangedSubviews: [dedicationView, summaryView])
+        let view = UIStackView(arrangedSubviews: [dedicationView, summaryView, chaptersView])
         view.axis = .vertical
         view.spacing = 24
         return view
@@ -45,6 +47,7 @@ class BookDetailsBodyView: UIView {
     func configure(book: Book) {
         dedicationView.configure(book: book)
         summaryView.configure(book: book)
+        chaptersView.configure(book: book)
     }
     
 }

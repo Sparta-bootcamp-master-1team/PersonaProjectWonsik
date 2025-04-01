@@ -11,26 +11,29 @@ import SnapKit
 class BookDetailsView: UIView {
     
     // MARK: - 뷰
+    /// 스크롤 뷰
+    private lazy var scrollView: UIScrollView = {
+        let view = UIScrollView()
+        view.addSubview(detailsStack)
+        view.showsVerticalScrollIndicator = false
+        view.showsHorizontalScrollIndicator = false
+        return view
+    }()
     
     private let bookDetailsHeaderView = BookDetailsHeaderView()
     
     private let bookDetailsBodyView = BookDetailsBodyView()
     
-    private let scrollView: UIScrollView = {
-        let scroll = UIScrollView()
-        scroll.showsVerticalScrollIndicator = false
-        return scroll
-    }()
-    
     // MARK: - 스택
     
-    
-    private lazy var bookDetailsStack: UIStackView = {
-        let view = UIStackView(arrangedSubviews: [bookDetailsHeaderView, bookDetailsBodyView])
-        view.axis = .vertical
-        view.spacing = 24
-        return view
+    private lazy var detailsStack: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [bookDetailsHeaderView, bookDetailsBodyView])
+        stack.axis = .vertical
+        stack.spacing = 24
+        return stack
     }()
+    
+    
     
     
     // MARK: - 초기화
@@ -47,22 +50,16 @@ class BookDetailsView: UIView {
     private func setUI() {
         addSubview(scrollView)
         
-        scrollView.addSubview(bookDetailsStack)
-        
-        bookDetailsStack.addArrangedSubview(bookDetailsHeaderView)
-        bookDetailsStack.addArrangedSubview(bookDetailsBodyView)
-        
         scrollView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(16)
             $0.leading.trailing.bottom.equalToSuperview()
-            $0.bottom.equalToSuperview()
         }
         
-        bookDetailsStack.snp.makeConstraints {
+        detailsStack.snp.makeConstraints {
             $0.edges.equalToSuperview()
-            $0.width.equalToSuperview()
+            $0.width.equalTo(scrollView.snp.width)
         }
-
+        
     }
     
     func configure(book: Book) {

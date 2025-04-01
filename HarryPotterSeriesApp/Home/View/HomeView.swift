@@ -45,9 +45,9 @@ class HomeView: UIView {
         }
     }
     
-    func configure(book: Book) {
-        titleView.configure(book: book)
-        seriesView.configure(book: book) // [ 추후 변경 ]
-        bookDetailsView.configure(book: book)
+    func configure(books: [Book]) {
+        titleView.configure(book: books[0])
+        seriesView.configure(book: books[0]) // [ 추후 변경 ]
+        bookDetailsView.configure(book: books[0])
     }
 }
