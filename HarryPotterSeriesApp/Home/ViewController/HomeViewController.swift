@@ -27,16 +27,11 @@ class HomeViewController: UIViewController {
             
             switch result {
             case .success(let books):
-                DispatchQueue.main.async {
-                    self.homeView.configure(books: books)
-                }
-                
+                self.homeView.configure(books: books)
             case .failure(let error):
                 AlertHelper.showErrorAlert(from: self, message: "책을 불러오는데 실패했습니다 \n 오류: \(error.localizedDescription)")
             }
         }
     }
-    
-    
 }
 

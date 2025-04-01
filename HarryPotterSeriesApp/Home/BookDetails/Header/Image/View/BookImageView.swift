@@ -41,7 +41,8 @@ class BookImageView: UIView {
         }
     }
     
-    func configure(book: Book) {
-        bookImage.image = UIImage(named: "harrypotter1")
+    func configure(book: Book, index: Int) {
+        let imageName = "harrypotter\(index + 1)"
+        bookImage.image = UIImage(named: imageName)
     }
 }

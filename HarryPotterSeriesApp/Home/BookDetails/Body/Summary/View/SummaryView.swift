@@ -77,16 +77,21 @@ class SummaryView: UIView {
     func configure(book: Book) {
         currentBookTitle = book.title
         summary.text = book.summary
-
+        
         let isLongText = book.summary.count > 450
         expand.isHidden = !isLongText
-
+        
         isExpanded = UserDefaults.standard.bool(forKey: currentBookTitle)
+        
+        if !isLongText {
+            summary.numberOfLines = 0
+        }
+        
         updateSummaryDisplay()
         
         expand.isHidden = !isLongText
     }
-
+    
     
     // 더보기/접기 기능
     @objc private func toggleText() {
@@ -96,8 +101,16 @@ class SummaryView: UIView {
     }
 
     private func updateSummaryDisplay() {
-        summary.numberOfLines = isExpanded ? 0 : 7
-        expand.setTitle(isExpanded ? "접기" : "더 보기", for: .normal)
+        let isLongText = summary.text?.count ?? 0 > 450
+
+        if isLongText {
+            summary.numberOfLines = isExpanded ? 0 : 7
+            expand.setTitle(isExpanded ? "접기" : "더 보기", for: .normal)
+        } else {
+            summary.numberOfLines = 0
+            expand.setTitle("", for: .normal)
+        }
     }
+
 
 }

@@ -7,7 +7,15 @@
 import UIKit
 import SnapKit
 
-class HomeView: UIView {
+class HomeView: UIView, SeriesButtonViewDelegate {
+    
+    func seriesButtonView(_ view: SeriesButtonView, didSelectBook book: Book) {
+        guard let index = seriesView.books.firstIndex(where: { $0.title == book.title }) else { return }
+        titleView.configure(book: book)
+        bookDetailsView.configure(book: book, index: index)
+    }
+
+
     
     // MARK: - 뷰
     private let titleView = TitleView()
@@ -24,6 +32,7 @@ class HomeView: UIView {
     // MARK: - 초기화
     override init(frame: CGRect) {
         super.init(frame: frame)
+        seriesView.delegate = self
         backgroundColor = .white
         setupUI()
     }
@@ -46,8 +55,13 @@ class HomeView: UIView {
     }
     
     func configure(books: [Book]) {
-        titleView.configure(book: books[0])
-        seriesView.configure(book: books[0]) // [ 추후 변경 ]
-        bookDetailsView.configure(book: books[0])
+        seriesView.configure(books: books)
+
+        let savedIndex = UserDefaults.standard.integer(forKey: "SelectedBookIndex")
+        let selectedBook = books[savedIndex]
+        
+        titleView.configure(book: selectedBook)
+        bookDetailsView.configure(book: selectedBook, index: savedIndex)
+        seriesView.delegate = self
     }
 }
