@@ -22,6 +22,7 @@ class ChaptersView: UIView {
         let label = UILabel()
         label.text = "Chapters"
         label.font = .systemFont(ofSize: 18, weight: .bold)
+        label.textAlignment = .left
         label.textColor = .black
         
         return label
@@ -53,6 +54,7 @@ class ChaptersView: UIView {
             label.font = .systemFont(ofSize: 14)
             label.textColor = .darkGray
             chaptersStack.addArrangedSubview(label)
+            label.textAlignment = .left
         }
         
     }
