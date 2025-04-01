@@ -47,9 +47,7 @@ class SummaryView: UIView {
     private func setUI() {
         addSubview(summaryStack)
         summaryStack.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.leading.trailing.equalToSuperview()
-            $0.bottom.equalToSuperview()
+            $0.edges.equalToSuperview()
         }
         
     }

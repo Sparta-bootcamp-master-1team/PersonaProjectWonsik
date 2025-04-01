@@ -11,31 +11,29 @@ import SnapKit
 class BookDetailsView: UIView {
     
     // MARK: - 뷰
-    /// 책 이미지 뷰
-    private let bookImageView = BookImageView()
+    /// 스크롤 뷰
+    private lazy var scrollView: UIScrollView = {
+        let view = UIScrollView()
+        view.addSubview(detailsStack)
+        view.showsVerticalScrollIndicator = false
+        view.showsHorizontalScrollIndicator = false
+        return view
+    }()
     
-    /// 책 정보 뷰
-    private let bookInfoView = BookInfoView()
+    private let bookDetailsHeaderView = BookDetailsHeaderView()
     
-    private let dedicationView = DedicationView()
-    
-    private let summaryView = SummaryView()
+    private let bookDetailsBodyView = BookDetailsBodyView()
     
     // MARK: - 스택
     
-    private lazy var infoStack: UIStackView = {
-        let view = UIStackView(arrangedSubviews: [bookImageView, bookInfoView])
-        view.axis = .horizontal
-        view.spacing = 10
-        return view
+    private lazy var detailsStack: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [bookDetailsHeaderView, bookDetailsBodyView])
+        stack.axis = .vertical
+        stack.spacing = 24
+        return stack
     }()
     
-    private lazy var metadataStack: UIStackView = {
-        let view = UIStackView(arrangedSubviews: [dedicationView, summaryView])
-        view.axis = .vertical
-        view.spacing = 24
-        return view
-    }()
+    
     
     
     // MARK: - 초기화
@@ -50,29 +48,22 @@ class BookDetailsView: UIView {
     
     // MARK: - UI 구성
     private func setUI() {
-        addSubview(infoStack)
+        addSubview(scrollView)
         
-        infoStack.snp.makeConstraints {
+        scrollView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(16)
-            $0.leading.equalTo(safeAreaLayoutGuide).offset(5)
-            $0.trailing.equalTo(safeAreaLayoutGuide).inset(5)
-
+            $0.leading.trailing.bottom.equalToSuperview()
         }
         
-        addSubview(metadataStack)
-        metadataStack.snp.makeConstraints {
-            $0.top.equalTo(infoStack.snp.bottom).offset(24)
-            $0.leading.equalToSuperview().offset(20)
-            $0.trailing.equalToSuperview().inset(20)
-
+        detailsStack.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+            $0.width.equalTo(scrollView.snp.width)
         }
         
     }
     
     func configure(book: Book) {
-        bookImageView.configure(book: book)
-        bookInfoView.configure(book: book)
-        dedicationView.configure(book: book)
-        summaryView.configure(book: book)
+        bookDetailsHeaderView.configure(book: book)
+        bookDetailsBodyView.configure(book: book)
     }
 }

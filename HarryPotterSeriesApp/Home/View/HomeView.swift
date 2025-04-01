@@ -38,15 +38,16 @@ class HomeView: UIView {
         addSubview(mainStackView)
         mainStackView.snp.makeConstraints {
             $0.top.equalTo(safeAreaLayoutGuide).offset(10)
-            $0.leading.trailing.equalToSuperview()
+            $0.leading.equalToSuperview().offset(20)
+            $0.trailing.equalToSuperview().offset(-20)
             $0.bottom.equalToSuperview()
 
         }
     }
     
-    func configure(book: Book) {
-        titleView.configure(book: book)
-        seriesView.configure(book: book) // [ 추후 변경 ]
-        bookDetailsView.configure(book: book)
+    func configure(books: [Book]) {
+        titleView.configure(book: books[0])
+        seriesView.configure(book: books[0]) // [ 추후 변경 ]
+        bookDetailsView.configure(book: books[0])
     }
 }
