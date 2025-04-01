@@ -47,9 +47,9 @@ class HomeView: UIView, SeriesButtonViewDelegate {
         addSubview(mainStackView)
         mainStackView.snp.makeConstraints {
             $0.top.equalTo(safeAreaLayoutGuide).offset(10)
-            $0.leading.equalToSuperview().offset(20)
-            $0.trailing.equalToSuperview().offset(-20)
-            $0.bottom.equalToSuperview()
+            $0.leading.equalTo(safeAreaLayoutGuide).offset(20)
+            $0.trailing.equalTo(safeAreaLayoutGuide).offset(-20)
+            $0.bottom.equalTo(safeAreaLayoutGuide)
 
         }
     }
