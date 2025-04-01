@@ -62,8 +62,8 @@ class BookDetailsView: UIView {
         
     }
     
-    func configure(book: Book) {
-        bookDetailsHeaderView.configure(book: book)
+    func configure(book: Book, index: Int) {
+        bookDetailsHeaderView.configure(book: book, index: index)
         bookDetailsBodyView.configure(book: book)
     }
 }

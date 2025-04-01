@@ -44,8 +44,9 @@ class BookDetailsHeaderView: UIView {
         
     }
     
-    func configure(book: Book) {
-        bookImageView.configure(book: book)
+    func configure(book: Book, index: Int) {
+        bookImageView.configure(book: book, index: index)
         bookInfoView.configure(book: book)
     }
+
 }
