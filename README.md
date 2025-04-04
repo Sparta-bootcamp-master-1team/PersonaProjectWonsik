@@ -173,4 +173,5 @@ SnapKit
 
 ## 트러블 슈팅 
 - Landscape 모드 전환 시 더 보기가 제한 조건에 맞게 변경되지 않는 부분 해결
+  - [Swift 비동기 처리와 DispatchQueue.main.async](https://sheep1sik.tistory.com/166)
 
