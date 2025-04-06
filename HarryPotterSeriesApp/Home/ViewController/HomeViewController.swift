@@ -27,19 +27,11 @@ class HomeViewController: UIViewController {
             
             switch result {
             case .success(let books):
-                // 임의로 첫번째 지정 [ 추후 수정 ]
-                if let firstBook = books.first {
-                    DispatchQueue.main.async {
-                        self.homeView.configure(with: firstBook)
-                    }
-                }
-                
+                self.homeView.configure(books: books)
             case .failure(let error):
                 AlertHelper.showErrorAlert(from: self, message: "책을 불러오는데 실패했습니다 \n 오류: \(error.localizedDescription)")
             }
         }
     }
-    
-    
 }
 

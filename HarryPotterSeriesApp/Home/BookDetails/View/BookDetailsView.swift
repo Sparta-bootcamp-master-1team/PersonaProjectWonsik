@@ -11,17 +11,29 @@ import SnapKit
 class BookDetailsView: UIView {
     
     // MARK: - 뷰
-    private let bookImageView = BookImageView()
-    private let bookInfoView = BookInfoView()
-    
-    
-    // MARK: - 스택
-    private lazy var detailsStack: UIStackView = {
-        let view = UIStackView(arrangedSubviews: [bookImageView, bookInfoView])
-        view.axis = .horizontal
-        view.spacing = 10
+    /// 스크롤 뷰
+    private lazy var scrollView: UIScrollView = {
+        let view = UIScrollView()
+        view.addSubview(detailsStack)
+        view.showsVerticalScrollIndicator = false
+        view.showsHorizontalScrollIndicator = false
         return view
     }()
+    
+    private let bookDetailsHeaderView = BookDetailsHeaderView()
+    
+    private let bookDetailsBodyView = BookDetailsBodyView()
+    
+    // MARK: - 스택
+    
+    private lazy var detailsStack: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [bookDetailsHeaderView, bookDetailsBodyView])
+        stack.axis = .vertical
+        stack.spacing = 24
+        return stack
+    }()
+    
+    
     
     
     // MARK: - 초기화
@@ -36,16 +48,22 @@ class BookDetailsView: UIView {
     
     // MARK: - UI 구성
     private func setUI() {
-        addSubview(detailsStack)
-        detailsStack.snp.makeConstraints {
+        addSubview(scrollView)
+        
+        scrollView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(16)
-            $0.bottom.equalToSuperview()
-            $0.leading.trailing.equalTo(safeAreaLayoutGuide).offset(5)
+            $0.leading.trailing.bottom.equalToSuperview()
         }
+        
+        detailsStack.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+            $0.width.equalTo(scrollView.snp.width)
+        }
+        
     }
     
-    func configure(with title: String, author: String, releaseDate: String, pages: Int) {
-        bookImageView.configure(with: "1") // [ 추후 변경 예정 ]
-        bookInfoView.configure(with: title, author: author, releaseDate: releaseDate, pages: pages)
+    func configure(book: Book, index: Int) {
+        bookDetailsHeaderView.configure(book: book, index: index)
+        bookDetailsBodyView.configure(book: book)
     }
 }

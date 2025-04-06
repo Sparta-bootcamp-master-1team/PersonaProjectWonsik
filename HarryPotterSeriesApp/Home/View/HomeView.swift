@@ -7,7 +7,15 @@
 import UIKit
 import SnapKit
 
-class HomeView: UIView {
+class HomeView: UIView, SeriesButtonViewDelegate {
+    
+    func seriesButtonView(_ view: SeriesButtonView, didSelectBook book: Book) {
+        guard let index = seriesView.books.firstIndex(where: { $0.title == book.title }) else { return }
+        titleView.configure(book: book)
+        bookDetailsView.configure(book: book, index: index)
+    }
+
+
     
     // MARK: - 뷰
     private let titleView = TitleView()
@@ -24,6 +32,7 @@ class HomeView: UIView {
     // MARK: - 초기화
     override init(frame: CGRect) {
         super.init(frame: frame)
+        seriesView.delegate = self
         backgroundColor = .white
         setupUI()
     }
@@ -38,14 +47,21 @@ class HomeView: UIView {
         addSubview(mainStackView)
         mainStackView.snp.makeConstraints {
             $0.top.equalTo(safeAreaLayoutGuide).offset(10)
-            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.leading.equalTo(safeAreaLayoutGuide).offset(20)
+            $0.trailing.equalTo(safeAreaLayoutGuide).offset(-20)
+            $0.bottom.equalTo(safeAreaLayoutGuide)
 
         }
     }
     
-    func configure(with book: Book) {
-        titleView.configure(with: book.title)
-        seriesView.configure(with: "1") // [ 추후 변경 ]
-        bookDetailsView.configure(with: book.title, author: book.author, releaseDate: book.releaseDate, pages: book.pages)
+    func configure(books: [Book]) {
+        seriesView.configure(books: books)
+
+        let savedIndex = UserDefaults.standard.integer(forKey: "SelectedBookIndex")
+        let selectedBook = books[savedIndex]
+        
+        titleView.configure(book: selectedBook)
+        bookDetailsView.configure(book: selectedBook, index: savedIndex)
+        seriesView.delegate = self
     }
 }

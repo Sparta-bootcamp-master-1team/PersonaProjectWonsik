@@ -8,18 +8,27 @@
 import UIKit
 import SnapKit
 
+protocol SeriesButtonViewDelegate: AnyObject {
+    func seriesButtonView(_ view: SeriesButtonView, didSelectBook book: Book)
+}
+
 class SeriesButtonView: UIView {
     
-    // 시리즈 버튼 [ 추후 시리즈 숫자에 맞게 버튼 생성 ]
-    private let button: UIButton = {
-        var button = UIButton()
-        button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 16)
-        button.backgroundColor = .systemBlue
-        button.layer.cornerRadius = 15
-        button.clipsToBounds = true
-        return button
-    }()
+    weak var delegate: SeriesButtonViewDelegate?
+    private(set) var books: [Book] = []
+    private let selectedIndexKey = "SelectedBookIndex"
+    
+    private var selectedIndex: Int = 0
+
+    
+    private let buttonStack: UIStackView = {
+            let stack = UIStackView()
+            stack.axis = .horizontal
+            stack.spacing = 8
+            stack.alignment = .center
+            stack.distribution = .fillEqually
+            return stack
+        }()
     
     // MARK: - 초기화
     override init(frame: CGRect) {
@@ -33,16 +42,65 @@ class SeriesButtonView: UIView {
 
     // MARK: - UI 구성
     private func setupUI() {
-        addSubview(button)
-        button.snp.makeConstraints {
+        
+        addSubview(buttonStack)
+        buttonStack.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.width.height.equalTo(30)
             $0.top.equalToSuperview().offset(16)
             $0.bottom.equalToSuperview()
         }
     }
     
-    func configure(with title: String) {
-        button.setTitle(title, for: .normal)
+    
+    func configure(books: [Book]) {
+        self.books = books
+        buttonStack.arrangedSubviews.forEach { $0.removeFromSuperview() }
+
+        for (index, _) in books.enumerated() {
+            let button = UIButton()
+            button.setTitle("\(index + 1)", for: .normal)
+            button.setTitleColor(.white, for: .normal)
+            button.titleLabel?.font = .systemFont(ofSize: 16)
+            button.backgroundColor = .systemBlue
+            button.layer.cornerRadius = 20
+            button.clipsToBounds = true
+            button.tag = index
+            button.snp.makeConstraints { $0.width.height.equalTo(40) }
+
+            button.addTarget(self, action: #selector(didTapButton(_:)), for: .touchUpInside)
+            buttonStack.addArrangedSubview(button)
+        }
+
+        let savedIndex = UserDefaults.standard.integer(forKey: selectedIndexKey)
+        selectedIndex = savedIndex
+        selectBook(at: savedIndex)
+
     }
+    
+    @objc private func didTapButton(_ sender: UIButton) {
+        let index = sender.tag
+        selectBook(at: index)
+        UserDefaults.standard.set(index, forKey: selectedIndexKey)
+    }
+
+    private func selectBook(at index: Int) {
+        guard index < books.count else { return }
+
+        for (_, view) in buttonStack.arrangedSubviews.enumerated() {
+            if let button = view as? UIButton {
+                button.setTitleColor(.systemBlue, for: .normal)
+                button.backgroundColor = .systemGray5
+            }
+        }
+
+        if let selectedButton = buttonStack.arrangedSubviews[index] as? UIButton {
+            selectedButton.setTitleColor(.white, for: .normal)
+            selectedButton.backgroundColor = .systemBlue
+        }
+
+        selectedIndex = index
+        let selectedBook = books[index]
+        delegate?.seriesButtonView(self, didSelectBook: selectedBook)
+    }
+
 }

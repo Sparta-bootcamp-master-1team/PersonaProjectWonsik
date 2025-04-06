@@ -11,6 +11,7 @@ import SnapKit
 class BookImageView: UIView {
     
     // MARK: - UI 요소
+    /// 책 이미지
     private let bookImage: UIImageView = {
         let book = UIImageView()
         book.contentMode = .scaleAspectFit
@@ -33,13 +34,15 @@ class BookImageView: UIView {
         addSubview(bookImage)
         
         bookImage.snp.makeConstraints {
+            $0.top.equalToSuperview()
             $0.width.equalTo(100)
-            $0.height.equalTo(bookImage.snp.width).multipliedBy(1.5)
+            $0.height.equalTo(150)
             $0.leading.trailing.equalToSuperview()
         }
     }
     
-    func configure(with title: String) {
-        bookImage.image = UIImage(named: "harrypotter\(title)")
+    func configure(book: Book, index: Int) {
+        let imageName = "harrypotter\(index + 1)"
+        bookImage.image = UIImage(named: imageName)
     }
 }
